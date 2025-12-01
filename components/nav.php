@@ -1,0 +1,3 @@
+<?php 
+#nav bar component
+?>
