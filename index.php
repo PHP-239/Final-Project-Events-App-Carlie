@@ -25,18 +25,19 @@ switch ($action){
         // Handle admin login action
         break;
     case 'view_event':
-        // $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-        // if ($eventId) {
-        //     $event = getEventById($pdo, $eventId);
-        //     if ($event) {
-        //         $r = $event; // to match variable used in partial
-        //     } else {
-        //         echo "<p class='text-danger'>Event not found.</p>";
-        //     }
-        // } else {
-        //     echo "<p class='text-danger'>Invalid event ID.</p>";
-        // }
-        $view = 'event_details';
+        $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        if ($eventId) {
+            $event = getEventById($pdo, $eventId);
+            if ($event) {
+                $r = $event; // to match variable used in partial
+                //Had to move event up here wasn't being called down there! aaaaaa!
+                $view = 'event_details';
+            } else {
+                echo "<p class='text-danger'>Event not found.</p>";
+            }
+        } else {
+            echo "<p class='text-danger'>Invalid event ID.</p>";
+        }
         break;
     default:
         $view = 'list';
@@ -64,17 +65,7 @@ switch ($action){
         $events = getEvents($pdo);
         include 'partials/public.php';
     }else if ($view === 'event_details') {
-       $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-        if ($eventId) {
-            $r = getEventById($pdo, $eventId);
-            if ($r) {
-                include 'partials/event_details.php';
-            } else {
-                echo "<p class='text-danger'>Event not found.</p>";
-            }
-        } else {
-            echo "<p class='text-danger'>Invalid event ID.</p>";
-    }
+        include 'partials/event_details.php';
     }
     
     ?>
