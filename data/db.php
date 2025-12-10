@@ -4,7 +4,7 @@ function get_pdo(): PDO
     $host = 'localhost';
     $db   = 'event_planner';
     $user = 'root';
-    $pass = 'root';
+    $pass = '';
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
