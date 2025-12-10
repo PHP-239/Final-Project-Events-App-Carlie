@@ -9,8 +9,7 @@ $rows = getEvents($pdo);
     <thead>
         <th>Title</th>
         <th>Date</th>
-        <th>Location</th>
-        <th>Description</th>
+        <th>Details</th>
     </thead>
     <tbody>
         <?php if (count($rows) > 0): ?>
@@ -18,9 +17,15 @@ $rows = getEvents($pdo);
                 <tr>
                     <td><?= htmlspecialchars($r['title']) ?></td>
                     <td><?= htmlspecialchars($r['event_date']) ?></td>
-                    <td><?= htmlspecialchars($r['location']) ?></td>
-                    <td><?= htmlspecialchars($r['description']) ?></td>
+                    <td> 
+                        <form method="post" class="d-inline">
+                            <input type="hidden" name="id" value="<?= $r['id'] ?>">
+                            <input type="hidden" name="action" value="view_event">
+                            <button class="btn btn-sm btn-outline-success">View Event</button>
+                        </form>
+                    </td>
                 </tr>
+                
             <?php endforeach; ?>
         <?php else: ?>
             <tr>

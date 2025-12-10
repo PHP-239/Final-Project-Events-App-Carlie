@@ -12,7 +12,40 @@ $action = filter_input(INPUT_POST, 'action');
 
 $pdo = get_pdo();
 // //print_r($pdo);
-// ?>
+
+
+switch ($action){
+    case 'login':
+        // Handle login action
+        break;
+    case 'event_register':
+        // Handle event registration action
+        break;
+    case 'admin_login':
+        // Handle admin login action
+        break;
+    case 'view_event':
+        // $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        // if ($eventId) {
+        //     $event = getEventById($pdo, $eventId);
+        //     if ($event) {
+        //         $r = $event; // to match variable used in partial
+        //     } else {
+        //         echo "<p class='text-danger'>Event not found.</p>";
+        //     }
+        // } else {
+        //     echo "<p class='text-danger'>Invalid event ID.</p>";
+        // }
+        $view = 'event_details';
+        break;
+    default:
+        $view = 'list';
+        break;
+}
+
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -26,9 +59,22 @@ $pdo = get_pdo();
 <body class="bg-dark text-white">
     <p>HI</p>
     <?php
+
     if ($view === 'list') {
         $events = getEvents($pdo);
         include 'partials/public.php';
+    }else if ($view === 'event_details') {
+       $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        if ($eventId) {
+            $r = getEventById($pdo, $eventId);
+            if ($r) {
+                include 'partials/event_details.php';
+            } else {
+                echo "<p class='text-danger'>Event not found.</p>";
+            }
+        } else {
+            echo "<p class='text-danger'>Invalid event ID.</p>";
+    }
     }
     
     ?>
