@@ -5,7 +5,7 @@ $rows = getEvents($pdo);
 
 ?>
 
-<table class="table">
+<table class="table container mt-4">
     <thead>
         <th>Title</th>
         <th>Date</th>
