@@ -14,7 +14,7 @@
           <a class="nav-link active" aria-current="page" href="?view=list">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="#?view=event_register" action=>Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Login</a>

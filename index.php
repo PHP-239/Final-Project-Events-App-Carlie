@@ -20,6 +20,7 @@ switch ($action){
         break;
     case 'event_register':
         // Handle event registration action
+        $view = 'event_register';
         break;
     case 'admin_login':
         // Handle admin login action
@@ -65,6 +66,10 @@ switch ($action){
         include 'partials/public.php';
     }else if ($view === 'event_details') {
         include 'partials/event_details.php';
+    }else if ($view === 'event_register') {
+        include 'partials/event-registration.php';
+    } else if ($view === 'registration_confirmation') {
+        include 'partials/registration_confirmation.php';
     }
     
     ?>

@@ -13,6 +13,7 @@ $rows = getEvents($pdo);
     </thead>
     <tbody>
         <?php if (count($rows) > 0): ?>
+            <!--loops through events and display them-->
             <?php foreach ($rows as $r): ?>
                 <tr>
                     <td><?= htmlspecialchars($r['title']) ?></td>
