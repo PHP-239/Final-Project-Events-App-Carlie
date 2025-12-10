@@ -5,7 +5,7 @@ include 'data/db.php';
 include 'data/functions.php';
 
 $pdo = get_pdo();
-
+print_r($pdo);
 ?>
 
 
