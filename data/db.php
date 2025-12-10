@@ -4,7 +4,10 @@ function get_pdo(): PDO
     $host = 'localhost';
     $db   = 'event_planner';
     $user = 'root';
+    //For XAMPP use -
     $pass = '';
+    //For MAMP use -
+    //pass='root'
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

@@ -4,9 +4,15 @@
 require_once 'data/db.php';
 require_once 'data/functions.php';
 
+
+session_start();
+
+$view = filter_input(INPUT_GET, 'view') ?: 'list';
+$action = filter_input(INPUT_POST, 'action');
+
 $pdo = get_pdo();
-//print_r($pdo);
-?>
+// //print_r($pdo);
+// ?>
 
 
 <!DOCTYPE html>
@@ -20,17 +26,11 @@ $pdo = get_pdo();
 <body class="bg-dark text-white">
     <p>HI</p>
     <?php
+    if ($view === 'list') {
         $events = getEvents($pdo);
-        foreach($events as $event) {
-            echo "<div class='card mb-3 bg-secondary text-white'>";
-            echo "<div class='card-body'>";
-            echo "<h5 class='card-title'>" . htmlspecialchars($event['title']) . "</h5>";
-            echo "<p class='card-text'>Date: " . htmlspecialchars($event['event_date']) . "</p>";
-            echo "<p class='card-text'>Location: " . htmlspecialchars($event['location']) . "</p>";
-            echo "</div>";
-            echo "</div>";
-        }
-
+        include 'partials/public.php';
+    }
+    
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
