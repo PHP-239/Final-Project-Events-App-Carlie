@@ -45,6 +45,7 @@ $rows = getEvents($pdo);
                     </form>
                     <form action="index.php" method="post" class = "d-inline">
                         <td> 
+                            <input type="hidden" name="id" value="<?= $r['id'] ?>">
                             <input type="hidden" name="action" value="edit"> 
                             <button class="btn btn-sm btn-outline-success">Edit</button>
                         </td>

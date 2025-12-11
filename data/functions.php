@@ -77,4 +77,16 @@ function createEvent($pdo, $title, $event_date, $location, $description) {
         'description' => $description
     ]);
 }
+
+function updateEvent($pdo, $id, $title, $event_date, $location, $description) {
+    // sql to update existing event
+    $stmt = $pdo->prepare("UPDATE events SET title = :title, event_date = :event_date, location = :location, description = :description WHERE id = :id");
+    return $stmt->execute([
+        'id' => $id,
+        'title' => $title,
+        'event_date' => $event_date,
+        'location' => $location,
+        'description' => $description
+    ]);
+}
 ?>

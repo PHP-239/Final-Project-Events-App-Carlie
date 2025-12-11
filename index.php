@@ -132,7 +132,43 @@ switch ($action){
             $view = 'create';
         }
         break;
-        $view = 'list';
+
+    case 'edit':
+        //edit event
+       $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        if ($id) {
+            $event = getEventById($pdo,$id);
+            if ($event) {
+                //stores event data in session to pre-fill form
+                $_SESSION['edit_event'] = $event;
+                $view = 'create';
+            }else{
+                echo "<p class='text-danger'>Event not found.</p>";
+                $view = 'list';
+            }
+        }else {
+                echo "<p class='text-danger'>Event not found.</p>";
+                $view = 'list';
+            }
+        break;
+    case 'update':
+        //update event
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        $title = trim((string)($_POST['title'] ?? ''));
+        $event_date = trim((string)($_POST['event_date'] ?? ''));
+        $location = trim((string)($_POST['location'] ?? ''));
+        $description = trim((string)($_POST['description'] ?? ''));
+
+        if ($id && isset($_POST['title'], $_POST['event_date'], $_POST['description'])) {
+            //call updateEvent function from functions.php
+            updateEvent($pdo, $id, $title, $event_date, $location, $description);
+            //clear edit_event session data
+            unset($_SESSION['edit_event']);
+            $view = 'list';
+        } else {
+            echo "<p class='text-danger'>All fields are required.</p>";
+            $view = 'create';
+        }
         break;
 }
 
