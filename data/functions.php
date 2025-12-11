@@ -1,9 +1,17 @@
 <?php
 
-// This function retrieves all upcoming events from the database that are scheduled for today or later, ordered by date.
+// This function retrieves all events from the database - ordered by date.
 // CURDATE() is used to filter events that are today or in the future.
 function getEvents($pdo) {
-    $stmt = $pdo->prepare("SELECT * FROM events WHERE event_date >= CURDATE() ORDER BY event_date ASC");
+    if (isset($_SESSION['user_id'])) {
+        // Admins can see all events, including past ones
+        $stmt = $pdo->prepare("SELECT * FROM events ORDER BY event_date ASC");
+    }
+    else{
+        // Regular users see only upcoming events
+        $stmt = $pdo->prepare("SELECT * FROM events WHERE event_date >= CURDATE() ORDER BY event_date ASC");
+    }
+    
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
