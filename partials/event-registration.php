@@ -2,7 +2,7 @@
     #event registration partial
 ?>
 
-<form action="event_register" method="post">
+<form action="registered" method="post">
     <div class="container mt-4">
         <h2>Event Registration</h2>
         <div class="mb-3">

@@ -37,8 +37,13 @@ switch ($action){
         // Handle login action
         break;
     case 'register':
-        // Handle event registration action
+        // show registration form
         $view = 'register';
+        break;
+    case 'registered':
+        // Handle registration confirmation action
+        
+        $view = 'registered';
         break;
     case 'event_details':
         $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
@@ -54,9 +59,6 @@ switch ($action){
         } else {
             echo "<p class='text-danger'>Invalid event ID.</p>";
         }
-        break;
-    default:
-        $view = 'list';
         break;
 }
 
@@ -83,7 +85,7 @@ switch ($action){
         include 'partials/event_details.php';
     }else if ($view === 'register') {
         include 'partials/event-registration.php';
-    } else if ($view === 'registration_confirmation') {
+    } else if ($view === 'registered') {
         include 'partials/registration_confirmation.php';
     }else if ($view === 'login') {
         include 'partials/admin-login.php';
