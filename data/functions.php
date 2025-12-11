@@ -41,14 +41,21 @@ function register($pdo, $event_id, $name, $email, $registered_at) {
     ]);
 }
 
-function user_find_by_username(string $username): ?array {
+function admin_find_by_username(string $username): ?array {
     //fetch user by username
     $pdo = get_pdo();
     // prepare and execute SQL statement to find user by username
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :u");
+    $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = :u");
     $stmt->execute([':u'=>$username]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ?: null;
+}
+
+//Get registered users and their event
+function getRegistrations($pdo) {
+    $stmt = $pdo->prepare("SELECT registrations.*, events.title AS event_title FROM registrations JOIN events ON registrations.event_id = events.id ORDER BY registrations.event_id DESC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 ?>

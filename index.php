@@ -26,6 +26,14 @@ $action = filter_input(INPUT_POST, 'action');
 $public_views   = ['login', 'list', 'event_registration','registration_confirmation','event_details'];
 $public_actions = ['login', 'register', 'event_details'];
 
+if ($action && !in_array($action, $public_actions, true)) {
+    require_login();
+}
+
+if (!$action && !in_array($view, $public_views, true)) {
+    require_login();
+}
+
 $pdo = get_pdo();
 // //print_r($pdo);
 
@@ -38,11 +46,10 @@ switch ($action){
         if ($username && $password) {
             
             //call user_find_by_username function from functions.php-- see functions.php for details
-            $user = user_find_by_username($username);
+            $admin = admin_find_by_username($username);
             //verify password using password_verify
-            if ($user && password_verify($password, $user['password_hash'])) {
-                $_SESSION['user_id'] = (int)$user['id'];
-                $_SESSION['full_name'] = $user['full_name'];
+            if ($admin && password_verify($password, $admin['password_hash'])) {
+                $_SESSION['user_id'] = (int)$admin['id'];
                 $view = 'list';
             } else {
                 $login_error = "Invalid username or password.";
@@ -108,7 +115,7 @@ switch ($action){
     <?php
     include 'components/nav.php';
     if ($view === 'list') {
-        $events = getEvents($pdo);
+        //$events = getEvents($pdo);
         include 'partials/public.php';
     }else if ($view === 'event_details') {
         include 'partials/event_details.php';
@@ -118,6 +125,9 @@ switch ($action){
         include 'partials/registration_confirmation.php';
     }else if ($view === 'login') {
         include 'partials/admin-login.php';
+    }else if ($view === 'registrations') {
+        
+        include 'partials/registrations.php';
     }
     
     ?>

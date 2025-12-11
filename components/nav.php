@@ -14,6 +14,10 @@
             <!--Register-->
           <a class="nav-link active" href="?view=register">Register</a>
         </li>
+        <li>
+            <!--guests-->
+          <a class="nav-link active" href="?view=registrations">Guests</a>
+        </li>
         <li class="nav-item">
             <!--Login-->
           <a class="nav-link active" href="?view=login">Login</a>

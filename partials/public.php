@@ -1,5 +1,5 @@
 <?php
-
+#public
 require_once __DIR__ . '/../data/functions.php';
 $rows = getEvents($pdo);
 
