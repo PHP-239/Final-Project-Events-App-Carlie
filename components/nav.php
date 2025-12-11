@@ -24,6 +24,15 @@
         </li>
       </ul>
       <span class="navbar-text">
+        <?php
+        if (isset($_SESSION['user_id'])):?>
+        <form action= "index.php" method="post">
+            <input type="hidden" name="action" value="logout">
+            <button class="btn btn-sm btn-outline-secondary">Logout</button>
+          </form>
+        <?php endif; ?>
+      </span>
+      <span class="navbar-text">
         Carlie - PHP Final Project
       </span>
     </div>

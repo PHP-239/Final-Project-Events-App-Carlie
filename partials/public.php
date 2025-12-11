@@ -5,11 +5,18 @@ $rows = getEvents($pdo);
 
 ?>
 
-<table class="table container mt-4">
+<div class ="container mt-3">
+    <h1>Upcoming Events</h1>
+    <table class="table container mt-4">
     <thead>
         <th>Title</th>
         <th>Date</th>
         <th>Details</th>
+        <?php
+        if (isset($_SESSION['user_id'])):?>
+            <th>Delete</th>
+            <th>Edit</th>
+        <?php endif; ?>
     </thead>
     <tbody>
         <?php if (count($rows) > 0): ?>
@@ -22,10 +29,32 @@ $rows = getEvents($pdo);
                         <form method="post" class="d-inline">
                             <input type="hidden" name="id" value="<?= $r['id'] ?>">
                             <input type="hidden" name="action" value="event_details">
-                            <button class="btn btn-sm btn-outline-success">View Event</button>
+                            <button class="btn btn-sm btn btn-outline-info">View Event</button>
                         </form>
                     </td>
+                    <?php
+
+                    if (isset($_SESSION['user_id'])):?>
+
+                    <form action="index.php" method="post" class = "d-inline">
+                         <td>
+                            <input type="hidden" name="id" value="<?= $r['id'] ?>">
+                            <input type="hidden" name="action" value="delete"> 
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                    </form>
+                    <form action="index.php" method="post" class = "d-inline">
+                        <td> 
+                            <input type="hidden" name="action" value="edit"> 
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                        </td>
+                    </form>
+            
+                       
+                    <?php endif; ?>
                 </tr>
+
+                
                 
             <?php endforeach; ?>
         <?php else: ?>
@@ -37,3 +66,4 @@ $rows = getEvents($pdo);
         <?php endif; ?>
     </tbody>
 </table>
+</div>

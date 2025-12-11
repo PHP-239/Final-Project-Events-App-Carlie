@@ -58,4 +58,12 @@ function getRegistrations($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+function eventDelete(int $id): int
+{
+    $pdo = get_pdo();
+    $stmt = $pdo->prepare("DELETE FROM events WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->rowCount();
+}
 ?>

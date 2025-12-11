@@ -23,7 +23,7 @@ $view = filter_input(INPUT_GET, 'view') ?: 'list';
 $action = filter_input(INPUT_POST, 'action');
 
 // Defined public views and actions
-$public_views   = ['login', 'list', 'event_registration','registration_confirmation','event_details'];
+$public_views   = ['login', 'list', 'register','registered','event_details'];
 $public_actions = ['login', 'register', 'event_details'];
 
 if ($action && !in_array($action, $public_actions, true)) {
@@ -91,6 +91,26 @@ switch ($action){
                 $view = 'event_details';
             } else {
                 echo "<p class='text-danger'>Event not found.</p>";
+            }
+        } else {
+            echo "<p class='text-danger'>Invalid event ID.</p>";
+        }
+        break;
+    case 'logout':
+        $_SESSION = [];
+        session_destroy();
+        session_start();
+        $view = 'login';
+        break;
+
+    case 'delete':
+        $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+        if ($eventId) {
+            $deletedRows = eventDelete($eventId);
+            if ($deletedRows > 0) {
+                $view = 'list';
+            } else {
+                echo "<p class='text-danger'>Event not found or could not be deleted.</p>";
             }
         } else {
             echo "<p class='text-danger'>Invalid event ID.</p>";
