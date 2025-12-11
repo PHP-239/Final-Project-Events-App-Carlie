@@ -66,4 +66,15 @@ function eventDelete(int $id): int
     $stmt->execute([':id' => $id]);
     return $stmt->rowCount();
 }
+
+function createEvent($pdo, $title, $event_date, $location, $description) {
+    // sql to create new event
+    $stmt = $pdo->prepare("INSERT INTO events (title, event_date, location, description) VALUES (:title, :event_date, :location, :description)");
+    return $stmt->execute([
+        'title' => $title,
+        'event_date' => $event_date,
+        'location' => $location,
+        'description' => $description
+    ]);
+}
 ?>

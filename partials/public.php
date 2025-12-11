@@ -64,6 +64,14 @@ $rows = getEvents($pdo);
                 </td>
             </tr>
         <?php endif; ?>
+
     </tbody>
 </table>
+
+    <?php
+        if (isset($_SESSION['user_id'])):?>
+            <div class="mt-4">
+                <a href="?view=create" class="btn btn-primary">Create New Event</a>
+            </div>
+    <?php endif; ?>
 </div>

@@ -116,6 +116,24 @@ switch ($action){
             echo "<p class='text-danger'>Invalid event ID.</p>";
         }
         break;
+    case 'create':
+        //create new event
+        //get event details from form submission
+        $title = trim((string)($_POST['title'] ?? ''));
+        $event_date = trim((string)($_POST['event_date'] ?? ''));
+        $location = trim((string)($_POST['location'] ?? ''));
+        $description = trim((string)($_POST['description'] ?? ''));
+
+        if (isset($_POST['title'], $_POST['event_date'], $_POST['description'])) {
+            //call createEvent function from functions.php
+            createEvent($pdo, $title, $event_date, $location, $description);
+            $view = 'list';
+        } else {
+            $view = 'create';
+        }
+        break;
+        $view = 'list';
+        break;
 }
 
 
@@ -146,8 +164,9 @@ switch ($action){
     }else if ($view === 'login') {
         include 'partials/admin-login.php';
     }else if ($view === 'registrations') {
-        
         include 'partials/registrations.php';
+    }else if ($view === 'create') {
+        include 'partials/event-create.php';
     }
     
     ?>
