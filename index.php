@@ -7,8 +7,25 @@ require_once 'data/functions.php';
 
 session_start();
 
+
+function require_login(): void {
+    //check if user session exists or is empty
+    if (empty($_SESSION['user_id'])) {
+        //if $_SESSION['user_id'] is not set or empty, redirect to login page
+        header('Location: ?view=login');
+        exit;
+    }
+}
+
+
+// Get view and action from request
 $view = filter_input(INPUT_GET, 'view') ?: 'list';
 $action = filter_input(INPUT_POST, 'action');
+
+// // Defined public views and actions
+// $public_views   = ['login', 'list', event_registration','registration_confirmation','event_details'];
+// $public_actions = ['login', 'register', 'event_details'];
+
 
 $pdo = get_pdo();
 // //print_r($pdo);
@@ -16,16 +33,14 @@ $pdo = get_pdo();
 
 switch ($action){
     case 'login':
+        $view = 'login';
         // Handle login action
         break;
-    case 'event_register':
+    case 'register':
         // Handle event registration action
-        $view = 'event_register';
+        $view = 'register';
         break;
-    case 'admin_login':
-        // Handle admin login action
-        break;
-    case 'view_event':
+    case 'event_details':
         $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
         if ($eventId) {
             $event = getEventById($pdo, $eventId);
@@ -66,10 +81,12 @@ switch ($action){
         include 'partials/public.php';
     }else if ($view === 'event_details') {
         include 'partials/event_details.php';
-    }else if ($view === 'event_register') {
+    }else if ($view === 'register') {
         include 'partials/event-registration.php';
     } else if ($view === 'registration_confirmation') {
         include 'partials/registration_confirmation.php';
+    }else if ($view === 'login') {
+        include 'partials/admin-login.php';
     }
     
     ?>

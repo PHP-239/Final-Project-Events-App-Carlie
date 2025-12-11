@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="?view=list">Welcome!</a>
+    <a class="navbar-brand">Welcome!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,10 +14,10 @@
           <a class="nav-link active" aria-current="page" href="?view=list">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#?view=event_register" action=>Register</a>
+          <a class="nav-link active" href="?view=event_register">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link active" href="?view=login">Login</a>
         </li>
       </ul>
       <span class="navbar-text">

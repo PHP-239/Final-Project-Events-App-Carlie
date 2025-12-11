@@ -21,7 +21,7 @@ $rows = getEvents($pdo);
                     <td> 
                         <form method="post" class="d-inline">
                             <input type="hidden" name="id" value="<?= $r['id'] ?>">
-                            <input type="hidden" name="action" value="view_event">
+                            <input type="hidden" name="action" value="event_details">
                             <button class="btn btn-sm btn-outline-success">View Event</button>
                         </form>
                     </td>

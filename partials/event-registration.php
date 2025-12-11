@@ -15,7 +15,7 @@
         </div>
 
         
-        <input type="hidden" name="action" value="event_register">
+        <input type="hidden" name="action" value="registered">
         <button type="submit" class="btn btn-primary">Register</button>
     </div>
 </form>
