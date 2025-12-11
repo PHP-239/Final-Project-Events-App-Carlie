@@ -1,6 +1,5 @@
 <?php
  #admin login partial
-    echo("Admin Login");
 ?>
 
   <form action="admin_login" method="post">

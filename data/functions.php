@@ -15,26 +15,40 @@ function getEventById($pdo, $id) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function inputEvent($pdo, $eventId, $title, $location, $description) {
+function inputEvent($pdo, $event_id, $title, $location, $description) {
     // sql to register user to add new event
-    $stmt = $pdo->prepare("INSERT INTO events (id, title, location, description) VALUES (:event_id, :title, :location, :description)");
+    $stmt = $pdo->prepare("
+    INSERT INTO events (event_id, title, location, description)
+    VALUES (:event_id, :title, :location, :description)
+    ");
     return $stmt->execute([
-        'event_id' => $eventId,
+        'event_id' => $event_id,
         'title' => $title,
         'location' => $location,
         'description' => $description
     ]);
 }
 
-function register($pdo, $eventId, $name, $email, $registred_at) {
+function register($pdo, $event_id, $name, $email, $registered_at) {
     // sql to register user to event
-    $stmt = $pdo->prepare("INSERT INTO registrations(id, eventId, name, email, register_at) VALUES (:event_id, :name, :email, :registered_at)");
-
+    $stmt = $pdo->prepare("INSERT INTO registrations(event_id, name, email, registered_at) VALUES (:event_id, :name, :email, :registered_at)");
+    //fixed my dyslexia typos to 'registered_at'
     return $stmt->execute([
-        'event_id' => $eventId,
+        'event_id' => $event_id,
         'name' => $name,
         'email' => $email,
-        'registered_at' => $registred_at
+        'registered_at' => $registered_at
     ]);
 }
+
+function user_find_by_username(string $username): ?array {
+    //fetch user by username
+    $pdo = get_pdo();
+    // prepare and execute SQL statement to find user by username
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :u");
+    $stmt->execute([':u'=>$username]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row ?: null;
+}
+
 ?>

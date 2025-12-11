@@ -22,10 +22,9 @@ function require_login(): void {
 $view = filter_input(INPUT_GET, 'view') ?: 'list';
 $action = filter_input(INPUT_POST, 'action');
 
-// // Defined public views and actions
-// $public_views   = ['login', 'list', event_registration','registration_confirmation','event_details'];
-// $public_actions = ['login', 'register', 'event_details'];
-
+// Defined public views and actions
+$public_views   = ['login', 'list', 'event_registration','registration_confirmation','event_details'];
+$public_actions = ['login', 'register', 'event_details'];
 
 $pdo = get_pdo();
 // //print_r($pdo);
@@ -33,8 +32,26 @@ $pdo = get_pdo();
 
 switch ($action){
     case 'login':
-        $view = 'login';
-        // Handle login action
+        $username = trim((string)($_POST['username'] ?? ''));
+        $password = (string)($_POST['password'] ?? '');
+
+        if ($username && $password) {
+            
+            //call user_find_by_username function from functions.php-- see functions.php for details
+            $user = user_find_by_username($username);
+            //verify password using password_verify
+            if ($user && password_verify($password, $user['password_hash'])) {
+                $_SESSION['user_id'] = (int)$user['id'];
+                $_SESSION['full_name'] = $user['full_name'];
+                $view = 'list';
+            } else {
+                $login_error = "Invalid username or password.";
+                $view = 'login';
+            }
+        } else {
+            $login_error = "Enter both fields.";
+            $view = 'login';
+        }
         break;
     case 'register':
         // show registration form
@@ -42,8 +59,20 @@ switch ($action){
         break;
     case 'registered':
         // Handle registration confirmation action
+        if (!isset($_POST['event_id'], $_POST['name'], $_POST['email'])) {
+            echo "<p class='text-danger'>All fields are required.</p>";
+            $view = 'register';
+            break;
+        }else{
+            register($pdo,
+            filter_input(INPUT_POST, 'event_id', FILTER_VALIDATE_INT),
+            htmlspecialchars(trim((string)($_POST['name'] ?? ''))),
+            htmlspecialchars(trim((string)($_POST['email'] ?? ''))),
+            //get current date and time for registration timestamp
+            date('Y-m-d H:i:s'));
+            $view = 'registered';
+        }
         
-        $view = 'registered';
         break;
     case 'event_details':
         $eventId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
